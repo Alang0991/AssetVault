@@ -1,0 +1,341 @@
+﻿<Page x:Class="AssetVault.Pages.LibraryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:helpers="clr-namespace:AssetVault.Helpers"
+      xmlns:models="clr-namespace:AssetVault.Models"
+      Title="Library"
+      x:Name="Root">
+
+    <Page.Resources>
+
+        <DataTemplate DataType="{x:Type models:AssetItem}">
+
+            <Button Style="{StaticResource AssetCardButtonStyle}"
+                    Tag="{Binding}"
+                    Click="AssetCard_Click">
+
+                <StackPanel Margin="12">
+
+                    <Border Height="90"
+                            Margin="0,0,0,8"
+                            CornerRadius="8"
+                            Background="{StaticResource SecondaryPanelBg}">
+
+                        <Grid>
+
+                            <Image Stretch="UniformToFill"
+                                   helpers:AsyncImageLoader.SourcePath="{Binding ThumbnailPath}"/>
+
+                            <TextBlock Text="No Preview"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Foreground="{StaticResource SecondaryTextBrush}"/>
+
+                        </Grid>
+
+                    </Border>
+
+                    <TextBlock Text="{Binding Name}"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               TextTrimming="CharacterEllipsis"/>
+
+                    <TextBlock Text="{Binding Rating, StringFormat=Rating: {0}/5}"
+                               FontSize="11"
+                               Margin="0,4,0,0"
+                               Foreground="Gold"/>
+
+                    <Border Background="{StaticResource SecondaryPanelBg}"
+                            BorderBrush="{StaticResource BorderBrushSoft}"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            Padding="6,3"
+                            Margin="0,6,0,6"
+                            HorizontalAlignment="Left">
+
+                        <TextBlock Text="{Binding Category}"
+                                   FontSize="11"
+                                   Foreground="{StaticResource SecondaryTextBrush}"/>
+
+                    </Border>
+
+                    <ItemsControl ItemsSource="{Binding TagList}" MaxHeight="40">
+
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+
+                                <Border Background="{StaticResource SecondaryPanelBg}"
+                                        BorderBrush="{StaticResource BorderBrushSoft}"
+                                        BorderThickness="1"
+                                        CornerRadius="6"
+                                        Padding="5,2"
+                                        Margin="0,2,4,2">
+
+                                    <TextBlock Text="{Binding}"
+                                               FontSize="10"
+                                               Foreground="{StaticResource SecondaryTextBrush}"/>
+
+                                </Border>
+
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+
+                    </ItemsControl>
+
+                    <TextBlock Text="{Binding FileType}"
+                               Margin="0,6,0,0"
+                               FontSize="11"
+                               Foreground="{StaticResource SecondaryTextBrush}"/>
+
+                    <TextBlock Text="{Binding FileSizeReadable}"
+                               FontSize="10"
+                               Foreground="{StaticResource SecondaryTextBrush}"/>
+
+                </StackPanel>
+
+            </Button>
+
+        </DataTemplate>
+
+    </Page.Resources>
+
+    <Grid Margin="28">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="380" />
+        </Grid.ColumnDefinitions>
+
+        <!-- LEFT SIDE -->
+        <Border Grid.Column="0"
+                Style="{StaticResource CardBorderStyle}"
+                Margin="0,0,18,0">
+
+            <Grid>
+
+                <TextBlock x:Name="LoadingTextBlock"
+                           Text="Loading assets..."
+                           FontSize="16"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource SecondaryTextBrush}"
+                           Visibility="Collapsed"/>
+
+                <TextBlock x:Name="EmptyStateTextBlock"
+                           Text="No assets found."
+                           FontSize="16"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource SecondaryTextBrush}"
+                           Visibility="Collapsed"/>
+
+                <ListBox x:Name="AssetsListBox"
+                         ItemsSource="{Binding AssetRows, ElementName=Root}"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                         ScrollViewer.CanContentScroll="True"
+                         VirtualizingStackPanel.IsVirtualizing="True"
+                         VirtualizingStackPanel.VirtualizationMode="Recycling">
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Margin" Value="0,0,0,14"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <ContentPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+
+                            <UniformGrid Columns="4">
+
+                                <ContentControl Content="{Binding First}" Margin="0,0,14,0"/>
+                                <ContentControl Content="{Binding Second}" Margin="0,0,14,0"/>
+                                <ContentControl Content="{Binding Third}" Margin="0,0,14,0"/>
+                                <ContentControl Content="{Binding Fourth}"/>
+
+                            </UniformGrid>
+
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
+
+            </Grid>
+
+        </Border>
+
+        <!-- DETAILS PANEL -->
+        <Border Grid.Column="1"
+                Style="{StaticResource CardBorderStyle}">
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                <StackPanel>
+
+                    <TextBlock Text="Asset Details"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Margin="0,0,0,18"/>
+
+                    <Border Height="170"
+                            CornerRadius="14"
+                            BorderBrush="{StaticResource BorderBrushSoft}"
+                            BorderThickness="1"
+                            Background="{StaticResource SecondaryPanelBg}"
+                            Margin="0,0,0,18">
+
+                        <Grid>
+
+                            <Image x:Name="PreviewImage"
+                                   Stretch="UniformToFill"/>
+
+                            <TextBlock Text="Preview Image"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Foreground="{StaticResource SecondaryTextBrush}"/>
+
+                        </Grid>
+
+                    </Border>
+
+                    <TextBlock Text="Name"/>
+                    <TextBox x:Name="NameTextBox" Margin="0,6,0,12"/>
+
+                    <TextBlock Text="Category"/>
+
+                    <ComboBox x:Name="CategoryComboBox"
+                              Margin="0,6,0,12"
+                              SelectedIndex="0">
+
+                        <ComboBox.ItemsSource>
+                            <x:Array Type="{x:Type sys:String}">
+                                <sys:String>Avatars</sys:String>
+                                <sys:String>Clothing</sys:String>
+                                <sys:String>Accessories</sys:String>
+                                <sys:String>Hair</sys:String>
+                                <sys:String>Props</sys:String>
+                                <sys:String>World Assets</sys:String>
+                                <sys:String>Textures</sys:String>
+                                <sys:String>Shaders</sys:String>
+                                <sys:String>Animations</sys:String>
+                                <sys:String>Audio</sys:String>
+                                <sys:String>Unity Packages</sys:String>
+                                <sys:String>NSFW</sys:String>
+                                <sys:String>Other</sys:String>
+                            </x:Array>
+                        </ComboBox.ItemsSource>
+
+                    </ComboBox>
+
+                    <CheckBox x:Name="FavoriteCheckBox"
+                              Content="Favorite ⭐"
+                              Margin="0,0,0,12"/>
+
+                    <TextBlock Text="Rating"/>
+
+                    <ComboBox x:Name="RatingComboBox"
+                              Margin="0,6,0,12"
+                              SelectedIndex="0">
+
+                        <ComboBoxItem Content="0"/>
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+
+                    </ComboBox>
+
+                    <TextBlock Text="Sub Type"/>
+                    <TextBox x:Name="SubTypeTextBox" Margin="0,6,0,12"/>
+
+                    <TextBlock Text="Tags"/>
+                    <TextBox x:Name="TagsTextBox" Margin="0,6,0,12"/>
+
+                    <TextBlock Text="Creator"/>
+                    <TextBox x:Name="CreatorTextBox" Margin="0,6,0,12"/>
+
+                    <TextBlock Text="Notes"/>
+
+                    <TextBox x:Name="NotesTextBox"
+                             Margin="0,6,0,12"
+                             AcceptsReturn="True"
+                             Height="120"
+                             TextWrapping="Wrap"/>
+
+                    <TextBlock Text="Preview Image Path"/>
+
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,6,0,12">
+
+                        <TextBox x:Name="PreviewImagePathTextBox"
+                                 Width="230"
+                                 Margin="0,0,8,0"/>
+
+                        <Button Content="Choose"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="ChoosePreviewButton_Click"/>
+
+                    </StackPanel>
+
+                    <TextBlock Text="File Path"/>
+
+                    <TextBox x:Name="FilePathTextBox"
+                             Margin="0,6,0,18"
+                             IsReadOnly="True"/>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Button x:Name="SaveButton"
+                                Content="Save"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Click="SaveButton_Click"/>
+
+                        <Button x:Name="DeleteButton"
+                                Content="Delete"
+                                Style="{StaticResource DangerButtonStyle}"
+                                Click="DeleteButton_Click"/>
+
+                        <Button Content="Open Folder"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="OpenFolderButton_Click"/>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+            </ScrollViewer>
+
+        </Border>
+
+    </Grid>
+
+</Page>
