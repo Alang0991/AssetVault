@@ -1,48 +1,62 @@
 # 🧰 AssetVault
 
+![Version](https://img.shields.io/badge/version-1.0-blue)
+![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
+![Framework](https://img.shields.io/badge/framework-.NET%20WPF-purple)
+![Database](https://img.shields.io/badge/database-SQLite-green)
+![License](https://img.shields.io/badge/license-MIT-yellow)
+
 AssetVault is a modern desktop asset manager built with WPF (.NET) designed for organizing VRChat, Unity, and 3D assets in a clean and powerful library.
 
-It helps creators manage large asset collections with categories, tags, previews, favorites, and ratings — all in a fast desktop application.
+It helps creators manage large asset collections with categories, tags, previews, favorites, and ratings — all inside a fast desktop application.
 
 ---
 
 # ✨ Features
 
+## 📦 Asset Management
 • Drag & Drop Asset Importing  
-• Automatic Asset Categorization  
-• Preview Images  
-• Favorites & Rating System  
-• Tagging System  
 • Organized Asset Library  
+• Automatic Asset Categorization  
+• Local SQLite Database (fast & offline)
+
+## 🔎 Search & Organization
 • Fast Searching  
+• Tagging System  
+• Favorites & Rating System  
+• Advanced Asset Filtering
+
+## 🖼 Preview System
+• Preview Images  
+• Quick asset browsing  
+• Easy library navigation
+
+## ⚡ Utility Tools
 • Dashboard Statistics  
 • Automatic Metadata Rebuild  
 • Open Asset Folder Directly  
-• Local SQLite Database (fast & offline)
 
 ---
 
 # 📥 Download
 
-Download the latest version from Releases.
-
-Go to the **Releases section** and download the latest version.
+Download the latest version from the Releases page.
 
 Steps:
 
-1. Download the latest .zip
-2. Extract it
-3. Run:
+1. Download the latest .zip  
+2. Extract the archive  
+3. Run AssetVault.exe  
 
-AssetVault.exe
-
-No installation required.
+No installation is required.
 
 ---
 
 # 🗃 Supported Asset Types
 
-AssetVault can manage many common creator files:
+AssetVault supports many common creator file formats.
+
+Unity / 3D Assets
 
 .unitypackage  
 .fbx  
@@ -51,11 +65,14 @@ AssetVault can manage many common creator files:
 .anim  
 .shader  
 .mat  
+
+Audio
+
 .wav  
 .mp3  
 .ogg  
 
-Images:
+Images
 
 .png  
 .jpg  
@@ -64,13 +81,13 @@ Images:
 
 ---
 
-# 📁 Asset Organization
+# 📁 Asset Storage
 
 Assets are automatically stored inside:
 
 AppData/Roaming/AssetVault/Assets
 
-Categories include:
+Default categories include:
 
 Avatars  
 Clothing  
@@ -90,13 +107,15 @@ Other
 
 # 🧠 How AssetVault Works
 
-AssetVault uses:
+AssetVault uses a lightweight architecture designed for speed and reliability.
 
-• SQLite Database  
-• Relative asset paths  
-• Automatic metadata rebuilding  
+It uses:
 
-This makes the app portable and reliable across different PCs.
+SQLite Database  
+Relative asset paths  
+Automatic metadata rebuilding  
+
+This makes the application fast, portable, and reliable across different PCs.
 
 ---
 
@@ -129,7 +148,7 @@ https://github.com/Alang0991
 
 # 🚀 Future Plans
 
-Planned improvements:
+Planned improvements include:
 
 • Thumbnail generation  
 • Asset duplicate detection  
@@ -141,11 +160,26 @@ Planned improvements:
 
 ---
 
+# 🤝 Contributing
+
+Contributions are welcome.
+
+If you'd like to contribute:
+
+1. Fork the repository  
+2. Create a new branch  
+3. Make your changes  
+4. Submit a pull request  
+
+Bug reports and feature suggestions are also appreciated.
+
+---
+
 # ⭐ Support the Project
 
 If you like this project, consider:
 
-• Starring the repository  
-• Reporting issues  
-• Suggesting features  
-• Contributing improvements
+• ⭐ Starring the repository  
+• 🐛 Reporting issues  
+• 💡 Suggesting features  
+• 🤝 Contributing improvements
